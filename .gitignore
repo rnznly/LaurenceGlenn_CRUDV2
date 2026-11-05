@@ -1,0 +1,15 @@
+## Visual Studio Cache & User Settings
+.vs/
+*.user
+*.userosscache
+*.sln.docstates
+*.suo
+
+## Build Output
+[Bb]in/
+[Oo]bj/
+
+## Temporary & Log Files
+*.tmp
+*.bak
+*.log

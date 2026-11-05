@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="BernadoDataClasses">
+  <DataContextMoniker Name="/BernadoDataContext" />
+  <nestedChildShapes>
+    <classShape Id="104ba16c-da37-409a-a41d-7f83bf014dd6" absoluteBounds="0.5, 0.5, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/BernadoDataContext/Categories" />
+      <nestedChildShapes>
+        <elementListCompartment Id="e308f672-7503-43b6-aa0b-ec4de5d3c9ee" absoluteBounds="0.515, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="74ec6c6a-f7ca-4286-b1e6-9902564c46aa" absoluteBounds="0.5, 2.25, 2, 2.5401025390625">
+      <DataClassMoniker Name="/BernadoDataContext/Products" />
+      <nestedChildShapes>
+        <elementListCompartment Id="64d6c57a-f31b-4939-b85c-01ff14b30c87" absoluteBounds="0.51500000000000057, 2.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="582415de-ea76-4f18-b918-fc77d4ae272d" absoluteBounds="4.625, 5.625, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/BernadoDataContext/PurchaseOrderLines" />
+      <nestedChildShapes>
+        <elementListCompartment Id="ef84221c-6bf3-46f7-8b87-26b7631a58a7" absoluteBounds="4.6400000000000006, 6.085, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="49c3131b-f0d8-46f6-9146-6594256d19ce" absoluteBounds="3.5, 3.125, 2, 1.9631982421875">
+      <DataClassMoniker Name="/BernadoDataContext/PurchaseOrders" />
+      <nestedChildShapes>
+        <elementListCompartment Id="90b65454-4a56-4e56-93f1-0df2b3e34e13" absoluteBounds="3.5150000000000006, 3.585, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="1efb084e-cccf-44b4-83f6-7ecafcd81600" absoluteBounds="3.625, 0.5, 2, 1.9631982421875">
+      <DataClassMoniker Name="/BernadoDataContext/StockMovements" />
+      <nestedChildShapes>
+        <elementListCompartment Id="569091fd-9f1f-4ec7-b058-4329f26be923" absoluteBounds="3.64, 0.96, 1.9700000000000002, 1.4031982421875" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="e31fe1bd-47b3-4683-9de7-f4bdc92d7cfa" absoluteBounds="0.5, 5.125, 2, 1.7708968098958331">
+      <DataClassMoniker Name="/BernadoDataContext/Suppliers" />
+      <nestedChildShapes>
+        <elementListCompartment Id="c8d216af-e737-47bb-886a-0f618541614c" absoluteBounds="0.51499999999999968, 5.585, 1.9700000000000002, 1.2108968098958333" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(1.5 : 1.69399251302083); (1.5 : 2.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/Categories/Categories_Products" />
+      <nodes>
+        <classShapeMoniker Id="104ba16c-da37-409a-a41d-7f83bf014dd6" />
+        <classShapeMoniker Id="74ec6c6a-f7ca-4286-b1e6-9902564c46aa" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(1.5 : 5.125); (1.5 : 4.7901025390625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/Suppliers/Suppliers_Products" />
+      <nodes>
+        <classShapeMoniker Id="e31fe1bd-47b3-4683-9de7-f4bdc92d7cfa" />
+        <classShapeMoniker Id="74ec6c6a-f7ca-4286-b1e6-9902564c46aa" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 2.79409912109375); (5.51041666666667 : 2.79409912109375 : JumpStart); (5.67708333333333 : 2.79409912109375 : JumpEnd); (6.15625 : 2.79409912109375); (6.15625 : 5.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/Products/Products_PurchaseOrderLines" />
+      <nodes>
+        <classShapeMoniker Id="74ec6c6a-f7ca-4286-b1e6-9902564c46aa" />
+        <classShapeMoniker Id="582415de-ea76-4f18-b918-fc77d4ae272d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(5.0625 : 5.0881982421875); (5.0625 : 5.625)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/PurchaseOrders/PurchaseOrders_PurchaseOrderLines" />
+      <nodes>
+        <classShapeMoniker Id="49c3131b-f0d8-46f6-9146-6594256d19ce" />
+        <classShapeMoniker Id="582415de-ea76-4f18-b918-fc77d4ae272d" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 5.34375); (4.03125 : 5.34375); (4.03125 : 5.0881982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/Suppliers/Suppliers_PurchaseOrders" />
+      <nodes>
+        <classShapeMoniker Id="e31fe1bd-47b3-4683-9de7-f4bdc92d7cfa" />
+        <classShapeMoniker Id="49c3131b-f0d8-46f6-9146-6594256d19ce" />
+      </nodes>
+    </associationConnector>
+    <associationConnector edgePoints="[(2.5 : 2.95955206054688); (5.59375 : 2.95955206054688); (5.59375 : 2.4631982421875)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BernadoDataContext/Products/Products_StockMovements" />
+      <nodes>
+        <classShapeMoniker Id="74ec6c6a-f7ca-4286-b1e6-9902564c46aa" />
+        <classShapeMoniker Id="1efb084e-cccf-44b4-83f6-7ecafcd81600" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>
