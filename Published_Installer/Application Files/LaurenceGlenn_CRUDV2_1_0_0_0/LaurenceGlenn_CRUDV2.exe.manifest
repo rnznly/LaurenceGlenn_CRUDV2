@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LaurenceGlenn_CRUDV2.exe" size="133632">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LaurenceGlenn_CRUDV2.exe" size="134144">
       <assemblyIdentity name="LaurenceGlenn_CRUDV2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>aNCe9RF9CPhQU6fakszKV1QTgKjRZZqvMg02FgWu67Y=</dsig:DigestValue>
+        <dsig:DigestValue>Y++P1V+IRZ6VJvVoT7x5fldmV8KGdCkclFLY251ygx0=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -59,7 +59,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>J1AOBrEjXq7BBPNRyNppVlTr/fvLnvUBEe6HHeLYTCo=</dsig:DigestValue>
+      <dsig:DigestValue>1gjPHpQFgYC94lM4+wC1s+P91fzh29FCeSmx+SG7EKU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Bernado_Schema.sql" size="19353">
@@ -77,7 +77,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>brHV5KUM4yInkMJ4yP2l7R+IAciBG8nyRRwRPC1JBE8=</dsig:DigestValue>
+      <dsig:DigestValue>HSgyS06yUE++Jq/ZnOGO3W+jZ+V/GjGGZyr4EiPIgEU=</dsig:DigestValue>
     </hash>
   </file>
   <file name="LaurenceGlenn_CRUDV2.exe.config" size="481">

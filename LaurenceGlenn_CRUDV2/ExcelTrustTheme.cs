@@ -411,6 +411,8 @@ namespace LaurenceGlenn_CRUDV2
             return name.Contains("receivepo") ||
                    name.Contains("receivetwice") ||
                    name.Contains("duplicateline") ||
+                   name.Contains("createdraft") ||
+                   name.Contains("generate") ||
                    name.Contains("test") ||
                    name.Contains("challenge");
         }

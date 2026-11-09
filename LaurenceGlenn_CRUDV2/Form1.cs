@@ -70,7 +70,8 @@ namespace LaurenceGlenn_CRUDV2
                     grpPOCreate, grpPOList, dgvPurchaseOrders,
                     grpPOActions, grpPOLineEntry, dgvPOLines,
                     grpLowStock, dgvLowStock, grpPOReport, dgvPOReport,
-                    grpStockMovements, dgvStockMovements
+                    grpStockMovements, dgvStockMovements,
+                    txtPONumber, btnGeneratePONumber, cmbPOSupplier, btnCreateDraftPO, btnRefreshPOs
                 };
 
                 foreach (Control c in fixedControls)
@@ -199,49 +200,92 @@ namespace LaurenceGlenn_CRUDV2
                     if (grpPOCreate != null && grpPOActions != null && grpPOList != null && grpPOLineEntry != null)
                     {
                         int halfW = (contentW - 35) / 2;
-                        int bottomH = Math.Max(200, contentH - 120);
+                        int topCardH = 90;
+                        int listTop = 118; // Clean 13px spacing below top cards
+                        int bottomH = Math.Max(200, contentH - listTop - 10);
 
+                        // Top-Left: Create PO Header Card
                         grpPOCreate.Left = 15;
                         grpPOCreate.Top = 15;
                         grpPOCreate.Width = halfW;
+                        grpPOCreate.Height = topCardH;
 
+                        // Precise Alignment inside grpPOCreate:
+                        lblPONumber.Left = 15;
+                        lblPONumber.Top = 28;
+
+                        txtPONumber.Left = 15;
+                        txtPONumber.Top = 49;
+                        txtPONumber.Width = 125;
+                        txtPONumber.Height = 26;
+
+                        btnGeneratePONumber.Left = 148;
+                        btnGeneratePONumber.Top = 48;
+                        btnGeneratePONumber.Width = 92;
+                        btnGeneratePONumber.Height = 28;
+
+                        lblPOSupplier.Left = 252;
+                        lblPOSupplier.Top = 28;
+
+                        btnCreateDraftPO.Width = 145;
+                        btnCreateDraftPO.Height = 42;
+                        btnCreateDraftPO.Left = halfW - 15 - btnCreateDraftPO.Width;
+                        btnCreateDraftPO.Top = 35;
+
+                        cmbPOSupplier.Left = 252;
+                        cmbPOSupplier.Top = 49;
+                        cmbPOSupplier.Height = 26;
+                        cmbPOSupplier.Width = Math.Max(120, (btnCreateDraftPO.Left - 15) - 252);
+
+                        // Bottom-Left: PO List Card
                         grpPOList.Left = 15;
-                        grpPOList.Top = 105;
+                        grpPOList.Top = listTop;
                         grpPOList.Width = halfW;
                         grpPOList.Height = bottomH;
-                        dgvPurchaseOrders.Width = halfW - 25;
-                        dgvPurchaseOrders.Height = Math.Max(100, bottomH - 65);
-                        btnRefreshPOs.Left = halfW - 125;
 
+                        btnRefreshPOs.Width = 110;
+                        btnRefreshPOs.Height = 28;
+                        btnRefreshPOs.Left = halfW - 15 - btnRefreshPOs.Width;
+                        btnRefreshPOs.Top = 18;
+
+                        dgvPurchaseOrders.Left = 15;
+                        dgvPurchaseOrders.Top = 55;
+                        dgvPurchaseOrders.Width = halfW - 30;
+                        dgvPurchaseOrders.Height = Math.Max(100, bottomH - 70);
+
+                        // Top-Right: Receive Order & Challenges Card
                         grpPOActions.Left = halfW + 25;
                         grpPOActions.Top = 15;
                         grpPOActions.Width = halfW;
-                        grpPOActions.Height = 80;
+                        grpPOActions.Height = topCardH;
 
                         int actMargin = 15;
                         int actSpacing = 12;
                         int actBtnW = Math.Max(60, (halfW - actMargin * 2 - actSpacing * 2) / 3);
                         btnReceivePO.Left = actMargin;
-                        btnReceivePO.Top = 30;
+                        btnReceivePO.Top = 35;
                         btnReceivePO.Width = actBtnW;
-                        btnReceivePO.Height = 38;
+                        btnReceivePO.Height = 42;
 
                         btnTestReceiveTwice.Left = actMargin + actBtnW + actSpacing;
-                        btnTestReceiveTwice.Top = 30;
+                        btnTestReceiveTwice.Top = 35;
                         btnTestReceiveTwice.Width = actBtnW;
-                        btnTestReceiveTwice.Height = 38;
+                        btnTestReceiveTwice.Height = 42;
 
                         btnTestDuplicateLine.Left = actMargin + (actBtnW + actSpacing) * 2;
-                        btnTestDuplicateLine.Top = 30;
+                        btnTestDuplicateLine.Top = 35;
                         btnTestDuplicateLine.Width = actBtnW;
-                        btnTestDuplicateLine.Height = 38;
+                        btnTestDuplicateLine.Height = 42;
 
+                        // Bottom-Right: Line Items Card
                         grpPOLineEntry.Left = halfW + 25;
-                        grpPOLineEntry.Top = 105;
+                        grpPOLineEntry.Top = listTop;
                         grpPOLineEntry.Width = halfW;
                         grpPOLineEntry.Height = bottomH;
-                        dgvPOLines.Width = halfW - 25;
-                        dgvPOLines.Height = Math.Max(100, bottomH - 165);
+                        dgvPOLines.Left = 15;
+                        dgvPOLines.Top = 145;
+                        dgvPOLines.Width = halfW - 30;
+                        dgvPOLines.Height = Math.Max(100, bottomH - 160);
                     }
 
                     // 5. Reports Tab Layout
