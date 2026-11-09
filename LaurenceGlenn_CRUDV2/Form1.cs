@@ -25,7 +25,21 @@ namespace LaurenceGlenn_CRUDV2
                 ExcelTrustTheme.Apply(this);
                 using (BernadoDataContext db = new BernadoDataContext())
                 {
-                    if (!db.DatabaseExists())
+                    bool canConnect = false;
+                    try
+                    {
+                        if (db.Connection.State != System.Data.ConnectionState.Open)
+                        {
+                            db.Connection.Open();
+                        }
+                        canConnect = true;
+                    }
+                    catch
+                    {
+                        try { canConnect = db.DatabaseExists(); } catch { canConnect = false; }
+                    }
+
+                    if (!canConnect)
                     {
                         MessageBox.Show("Cannot find database 'Bernado'. Please ensure SQL Server is running.",
                                         "Database Notice", MessageBoxButtons.OK, MessageBoxIcon.Warning);
