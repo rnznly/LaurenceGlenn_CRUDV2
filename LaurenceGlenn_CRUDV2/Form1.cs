@@ -44,6 +44,9 @@ namespace LaurenceGlenn_CRUDV2
                 cmbFilterPOStatus.SelectedIndex = 0;
                 GenerateNewPONumber();
 
+                // Reset child control anchors so programmatic responsive layout handles all resizing cleanly
+                ResetChildAnchors();
+
                 this.Resize += (s, args) => AdjustResponsiveLayout();
                 tabControlMain.SelectedIndexChanged += (s, args) => AdjustResponsiveLayout();
                 AdjustResponsiveLayout();
@@ -55,6 +58,32 @@ namespace LaurenceGlenn_CRUDV2
         }
 
 
+        private void ResetChildAnchors()
+        {
+            try
+            {
+                Control[] fixedControls = new Control[]
+                {
+                    grpProductInfo, grpProductSearch, dgvProducts,
+                    grpSupplierInfo, grpSupplierSearch, dgvSuppliers,
+                    grpCategoryInfo, dgvCategories,
+                    grpPOCreate, grpPOList, dgvPurchaseOrders,
+                    grpPOActions, grpPOLineEntry, dgvPOLines,
+                    grpLowStock, dgvLowStock, grpPOReport, dgvPOReport,
+                    grpStockMovements, dgvStockMovements
+                };
+
+                foreach (Control c in fixedControls)
+                {
+                    if (c != null)
+                    {
+                        c.Anchor = AnchorStyles.Top | AnchorStyles.Left;
+                    }
+                }
+            }
+            catch { }
+        }
+
         private void AdjustResponsiveLayout()
         {
             try
@@ -64,28 +93,128 @@ namespace LaurenceGlenn_CRUDV2
                 int mainW = tabControlMain.ClientSize.Width;
                 int mainH = tabControlMain.ClientSize.Height;
 
-                int tabHeaderW = (mainW - 12) / tabControlMain.TabCount;
-                tabControlMain.ItemSize = new System.Drawing.Size(Math.Max(tabHeaderW, 130), 38);
+                int tabHeaderW = (mainW - 20) / tabControlMain.TabCount;
+                tabControlMain.ItemSize = new System.Drawing.Size(Math.Max(tabHeaderW, 140), 38);
 
                 if (mainW > 600 && mainH > 400)
                 {
                     int contentW = mainW - 10;
                     int contentH = mainH - 45;
 
-                    // Purchase Orders Tab Layout
-                    if (grpPOCreate != null && grpPOActions != null)
+                    // 1. Products Tab Layout
+                    if (grpProductInfo != null && dgvProducts != null && grpProductSearch != null)
+                    {
+                        int leftColW = 435;
+                        int rightColLeft = leftColW + 25;
+                        int rightColW = Math.Max(200, contentW - rightColLeft - 10);
+                        int searchH = 60;
+
+                        grpProductInfo.Left = 15;
+                        grpProductInfo.Top = 15;
+                        grpProductInfo.Width = leftColW;
+                        grpProductInfo.Height = Math.Max(600, contentH - 25);
+
+                        grpProductSearch.Left = rightColLeft;
+                        grpProductSearch.Top = 15;
+                        grpProductSearch.Width = rightColW;
+                        grpProductSearch.Height = searchH;
+
+                        btnRefreshProducts.Left = rightColW - 115;
+                        btnRefreshProducts.Top = 20;
+                        btnRefreshProducts.Width = 100;
+                        btnRefreshProducts.Height = 28;
+
+                        btnSearchProduct.Left = rightColW - 225;
+                        btnSearchProduct.Top = 20;
+                        btnSearchProduct.Width = 95;
+                        btnSearchProduct.Height = 28;
+
+                        txtProductSearch.Left = 260;
+                        txtProductSearch.Top = 22;
+                        txtProductSearch.Width = Math.Max(120, rightColW - 495);
+
+                        dgvProducts.Left = rightColLeft;
+                        dgvProducts.Top = searchH + 25;
+                        dgvProducts.Width = rightColW;
+                        dgvProducts.Height = Math.Max(200, contentH - (searchH + 35));
+                    }
+
+                    // 2. Suppliers Tab Layout (Photo 3 Gap Fix)
+                    if (grpSupplierInfo != null && dgvSuppliers != null && grpSupplierSearch != null)
+                    {
+                        int leftColW = 435;
+                        int rightColLeft = leftColW + 25;
+                        int rightColW = Math.Max(200, contentW - rightColLeft - 10);
+                        int searchH = 60;
+
+                        grpSupplierInfo.Left = 15;
+                        grpSupplierInfo.Top = 15;
+                        grpSupplierInfo.Width = leftColW;
+                        grpSupplierInfo.Height = Math.Max(460, contentH - 25);
+
+                        grpSupplierSearch.Left = rightColLeft;
+                        grpSupplierSearch.Top = 15;
+                        grpSupplierSearch.Width = rightColW;
+                        grpSupplierSearch.Height = searchH;
+
+                        btnRefreshSuppliers.Left = rightColW - 120;
+                        btnRefreshSuppliers.Top = 20;
+                        btnRefreshSuppliers.Width = 105;
+                        btnRefreshSuppliers.Height = 28;
+
+                        btnSearchSupplier.Left = rightColW - 230;
+                        btnSearchSupplier.Top = 20;
+                        btnSearchSupplier.Width = 95;
+                        btnSearchSupplier.Height = 28;
+
+                        txtSupplierSearch.Left = 220;
+                        txtSupplierSearch.Top = 22;
+                        txtSupplierSearch.Width = Math.Max(120, rightColW - 460);
+
+                        dgvSuppliers.Left = rightColLeft;
+                        dgvSuppliers.Top = searchH + 25;
+                        dgvSuppliers.Width = rightColW;
+                        dgvSuppliers.Height = Math.Max(200, contentH - (searchH + 35));
+                    }
+
+                    // 3. Categories Tab Layout
+                    if (grpCategoryInfo != null && dgvCategories != null)
+                    {
+                        int leftColW = 435;
+                        int rightColLeft = leftColW + 25;
+                        int rightColW = Math.Max(200, contentW - rightColLeft - 10);
+
+                        grpCategoryInfo.Left = 15;
+                        grpCategoryInfo.Top = 15;
+                        grpCategoryInfo.Width = leftColW;
+                        grpCategoryInfo.Height = Math.Max(340, contentH - 25);
+
+                        dgvCategories.Left = rightColLeft;
+                        dgvCategories.Top = 15;
+                        dgvCategories.Width = rightColW;
+                        dgvCategories.Height = Math.Max(200, contentH - 25);
+                    }
+
+                    // 4. Purchase Orders Tab Layout
+                    if (grpPOCreate != null && grpPOActions != null && grpPOList != null && grpPOLineEntry != null)
                     {
                         int halfW = (contentW - 35) / 2;
-                        int bottomH = contentH - 120;
+                        int bottomH = Math.Max(200, contentH - 120);
 
+                        grpPOCreate.Left = 15;
+                        grpPOCreate.Top = 15;
                         grpPOCreate.Width = halfW;
+
+                        grpPOList.Left = 15;
+                        grpPOList.Top = 105;
                         grpPOList.Width = halfW;
                         grpPOList.Height = bottomH;
                         dgvPurchaseOrders.Width = halfW - 25;
-                        dgvPurchaseOrders.Height = bottomH - 65;
+                        dgvPurchaseOrders.Height = Math.Max(100, bottomH - 65);
                         btnRefreshPOs.Left = halfW - 125;
 
-                        grpPOActions.Left = halfW + 20;
+                        grpPOActions.Left = halfW + 25;
+                        grpPOActions.Top = 15;
                         grpPOActions.Width = halfW;
                         int actBtnW = (halfW - 36) / 3;
                         btnReceivePO.Left = 10;
@@ -95,35 +224,41 @@ namespace LaurenceGlenn_CRUDV2
                         btnTestDuplicateLine.Left = 10 + (actBtnW + 8) * 2;
                         btnTestDuplicateLine.Width = actBtnW;
 
-                        grpPOLineEntry.Left = halfW + 20;
+                        grpPOLineEntry.Left = halfW + 25;
+                        grpPOLineEntry.Top = 105;
                         grpPOLineEntry.Width = halfW;
                         grpPOLineEntry.Height = bottomH;
                         dgvPOLines.Width = halfW - 25;
-                        dgvPOLines.Height = bottomH - 165;
+                        dgvPOLines.Height = Math.Max(100, bottomH - 165);
                     }
 
-                    // Reports Tab Layout
-                    if (grpLowStock != null && grpPOReport != null)
+                    // 5. Reports Tab Layout
+                    if (grpLowStock != null && grpPOReport != null && grpStockMovements != null)
                     {
                         int rHalfW = (contentW - 35) / 2;
-                        int topH = contentH - 235;
+                        int topH = Math.Max(180, contentH - 255);
 
+                        grpLowStock.Left = 15;
+                        grpLowStock.Top = 15;
                         grpLowStock.Width = rHalfW;
                         grpLowStock.Height = topH;
                         dgvLowStock.Width = rHalfW - 25;
-                        dgvLowStock.Height = topH - 65;
+                        dgvLowStock.Height = Math.Max(80, topH - 65);
                         btnRefreshLowStock.Left = rHalfW - 160;
 
-                        grpPOReport.Left = rHalfW + 20;
+                        grpPOReport.Left = rHalfW + 25;
+                        grpPOReport.Top = 15;
                         grpPOReport.Width = rHalfW;
                         grpPOReport.Height = topH;
                         dgvPOReport.Width = rHalfW - 25;
-                        dgvPOReport.Height = topH - 75;
+                        dgvPOReport.Height = Math.Max(80, topH - 75);
 
-                        grpStockMovements.Top = topH + 20;
-                        grpStockMovements.Width = contentW - 15;
-                        grpStockMovements.Height = 205;
+                        grpStockMovements.Left = 15;
+                        grpStockMovements.Top = topH + 25;
+                        grpStockMovements.Width = contentW - 25;
+                        grpStockMovements.Height = Math.Max(150, contentH - topH - 35);
                         dgvStockMovements.Width = grpStockMovements.Width - 25;
+                        dgvStockMovements.Height = grpStockMovements.Height - 65;
                         btnRefreshMovements.Left = grpStockMovements.Width - 150;
                     }
                 }

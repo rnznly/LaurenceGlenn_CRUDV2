@@ -1,17 +1,19 @@
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Drawing.Text;
 using System.Windows.Forms;
 
 namespace LaurenceGlenn_CRUDV2
 {
     /// <summary>
     /// Excel Trust Enterprise Design System
-    /// Inspired by Microsoft Excel 365 & modern enterprise Data Editors (Telerik / Progress Data Editor)
-    /// Official Excel Trust Green (#107C41), clean calm mint off-white canvas (#F4F6F4),
+    /// Inspired by Microsoft Excel 365 & modern enterprise Data Editors (Progress / Telerik Data Editor)
+    /// Official Excel Trust Green (#107C41), calm mint off-white canvas (#F4F6F4),
     /// pure white floating cards (#FFFFFF) with 1px hairline borders (#E1DFDD),
     /// solid Excel Green table headers with pure white text, Excel range mint selection (#E8F8EE),
-    /// pill-style sheet tabs, and clean professional currency & tabular figures.
+    /// smooth rounded capsule pill buttons (Photo 5), floating capsule navigation pills with vector UI icons,
+    /// and deep Navy Blue header title (#002060).
     /// </summary>
     public static class ExcelTrustTheme
     {
@@ -29,8 +31,11 @@ namespace LaurenceGlenn_CRUDV2
         public static readonly Color ExcelMint         = Color.FromArgb(232, 248, 238); // #E8F8EE (Active Cell / Range Tint)
         public static readonly Color ExcelMintBorder   = Color.FromArgb(163, 226, 185); // #A3E2B9 (Mint Border)
 
+        // Deep Navy Blue (Header Title requirement Photo 2)
+        public static readonly Color TitleNavy         = Color.FromArgb(0, 32, 96);     // #002060 (Corporate Trust Navy Blue)
+
         // Borders & Dividers
-        public static readonly Color GridlineColor      = Color.FromArgb(225, 223, 221); // #E1DFDD (Excel Sheet Gridline)
+        public static readonly Color GridlineColor     = Color.FromArgb(225, 223, 221); // #E1DFDD (Excel Sheet Gridline)
         public static readonly Color BorderSubtle      = Color.FromArgb(226, 232, 240); // #E2E8F0 (Card hairline border)
         public static readonly Color BorderControl     = Color.FromArgb(200, 198, 196); // #C8C6C4 (Input border)
 
@@ -51,7 +56,7 @@ namespace LaurenceGlenn_CRUDV2
             form.BackColor = CanvasBg;
             form.ForeColor = TextPrimary;
             form.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
-            form.Text = "CTU SmartDesk  •  Campus Inventory & Restocking Data Editor";
+            form.Text = "Inventory & Purchase Order Management System";
 
             ApplyToHierarchy(form);
         }
@@ -133,8 +138,8 @@ namespace LaurenceGlenn_CRUDV2
             lbl.UseMnemonic = false;
             if (lbl.Name == "lblAppTitle")
             {
-                lbl.Text = "CTU SmartDesk  •  Campus Inventory & Restocking Data Editor";
-                lbl.ForeColor = TextPrimary;
+                lbl.Text = "Inventory & Purchase Order Management System";
+                lbl.ForeColor = TitleNavy; // Deep Navy Blue (#002060)
                 lbl.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
             }
             else if (lbl.Name == "lblProductCost" || lbl.Name == "lblPOLineCost")
@@ -210,8 +215,9 @@ namespace LaurenceGlenn_CRUDV2
             tc.DrawMode = TabDrawMode.OwnerDrawFixed;
             tc.SizeMode = TabSizeMode.Fixed;
             tc.Padding = new Point(0, 0);
-            int tabW = tc.TabCount > 0 ? (tc.ClientSize.Width - 12) / tc.TabCount : 200;
-            tc.ItemSize = new Size(Math.Max(tabW, 130), 38);
+
+            int tabW = tc.TabCount > 0 ? (tc.ClientSize.Width - 20) / tc.TabCount : 200;
+            tc.ItemSize = new Size(Math.Max(tabW, 140), 38);
 
             tc.DrawItem -= Tc_DrawItem;
             tc.DrawItem += Tc_DrawItem;
@@ -226,120 +232,316 @@ namespace LaurenceGlenn_CRUDV2
             bool isSelected = (tc.SelectedIndex == e.Index);
             Rectangle rect = e.Bounds;
 
-            // Pill-style Sheet Tabs (Matching the top pills in Data Editor)
-            if (isSelected)
+            // 1. Clear background behind tabs to blend smoothly with canvas
+            using (SolidBrush bgBrush = new SolidBrush(CanvasBg))
             {
-                // Solid Microsoft Excel Green Pill for Active Sheet
-                using (SolidBrush pillBrush = new SolidBrush(ExcelGreen))
-                {
-                    e.Graphics.FillRectangle(pillBrush, rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
-                }
-                using (Pen pillPen = new Pen(ExcelGreenDark, 1))
-                {
-                    e.Graphics.DrawRectangle(pillPen, rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
-                }
+                e.Graphics.FillRectangle(bgBrush, rect);
             }
-            else
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            // 2. Floating Capsule Pill with 8px horizontal gap and 4px vertical margin
+            Rectangle pillRect = new Rectangle(rect.X + 4, rect.Y + 2, rect.Width - 8, rect.Height - 4);
+
+            using (GraphicsPath path = GetCapsulePath(pillRect, pillRect.Height / 2))
             {
-                // Clean White Card Tab with subtle border
-                using (SolidBrush bgBrush = new SolidBrush(SurfaceCard))
+                if (isSelected)
                 {
-                    e.Graphics.FillRectangle(bgBrush, rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+                    // Active Sheet: Solid Microsoft Excel Green Pill (#107C41)
+                    using (SolidBrush pillBrush = new SolidBrush(ExcelGreen))
+                    {
+                        e.Graphics.FillPath(pillBrush, path);
+                    }
+                    using (Pen pillPen = new Pen(ExcelGreenDark, 1.2f))
+                    {
+                        e.Graphics.DrawPath(pillPen, path);
+                    }
                 }
-                using (Pen borderPen = new Pen(GridlineColor, 1))
+                else
                 {
-                    e.Graphics.DrawRectangle(borderPen, rect.X, rect.Y, rect.Width - 1, rect.Height - 1);
+                    // Inactive Sheet: Clean Floating White Card Pill (#FFFFFF) with subtle border
+                    using (SolidBrush pillBrush = new SolidBrush(SurfaceCard))
+                    {
+                        e.Graphics.FillPath(pillBrush, path);
+                    }
+                    using (Pen borderPen = new Pen(GridlineColor, 1f))
+                    {
+                        e.Graphics.DrawPath(borderPen, path);
+                    }
                 }
             }
 
-            // Tab Text (Pure White on active green pill, Slate on inactive)
-            Color textColor = isSelected ? Color.White : TextPrimary;
+            // 3. Tab Text & Vector UI Icon
+            Color fgColor = isSelected ? Color.White : TextPrimary;
             Font textFont = new Font("Segoe UI", isSelected ? 9.25F : 9F, isSelected ? FontStyle.Bold : FontStyle.Regular);
 
-            TextRenderer.DrawText(
-                e.Graphics,
-                page.Text,
-                textFont,
-                rect,
-                textColor,
-                TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter | TextFormatFlags.SingleLine | TextFormatFlags.NoPrefix
-            );
+            int iconSize = 16;
+            int spacing = 8;
+            SizeF textSize = e.Graphics.MeasureString(page.Text, textFont);
+            int totalW = iconSize + spacing + (int)textSize.Width;
+            int contentX = pillRect.X + (pillRect.Width - totalW) / 2;
+            int contentY = pillRect.Y + (pillRect.Height - iconSize) / 2;
+
+            // Draw Vector UI Icon
+            DrawTabIcon(e.Graphics, e.Index, new Rectangle(contentX, contentY, iconSize, iconSize), fgColor);
+
+            // Draw Tab Label
+            Rectangle textRect = new Rectangle(contentX + iconSize + spacing, pillRect.Y, pillRect.Width - (contentX - pillRect.X + iconSize + spacing), pillRect.Height);
+            using (SolidBrush textBrush = new SolidBrush(fgColor))
+            using (StringFormat sf = new StringFormat { LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap })
+            {
+                e.Graphics.DrawString(page.Text, textFont, textBrush, textRect, sf);
+            }
+        }
+
+        private static void DrawTabIcon(Graphics g, int tabIndex, Rectangle iconRect, Color color)
+        {
+            using (Pen pen = new Pen(color, 1.5f))
+            using (Brush brush = new SolidBrush(color))
+            {
+                pen.StartCap = LineCap.Round;
+                pen.EndCap = LineCap.Round;
+                pen.LineJoin = LineJoin.Round;
+
+                int x = iconRect.X + (iconRect.Width - 16) / 2;
+                int y = iconRect.Y + (iconRect.Height - 16) / 2;
+
+                switch (tabIndex)
+                {
+                    case 0: // Products: Isometric Box / Package
+                        Point[] topFlap = { new Point(x + 8, y + 2), new Point(x + 14, y + 5), new Point(x + 8, y + 8), new Point(x + 2, y + 5) };
+                        g.DrawPolygon(pen, topFlap);
+                        g.DrawLine(pen, x + 2, y + 5, x + 2, y + 11);
+                        g.DrawLine(pen, x + 14, y + 5, x + 14, y + 11);
+                        g.DrawLine(pen, x + 8, y + 8, x + 8, y + 14);
+                        g.DrawLine(pen, x + 2, y + 11, x + 8, y + 14);
+                        g.DrawLine(pen, x + 14, y + 11, x + 8, y + 14);
+                        break;
+
+                    case 1: // Suppliers: Enterprise Building
+                        g.DrawRectangle(pen, x + 2, y + 2, 12, 12);
+                        g.FillRectangle(brush, x + 4, y + 4, 2, 2);
+                        g.FillRectangle(brush, x + 10, y + 4, 2, 2);
+                        g.FillRectangle(brush, x + 4, y + 8, 2, 2);
+                        g.FillRectangle(brush, x + 10, y + 8, 2, 2);
+                        g.FillRectangle(brush, x + 7, y + 10, 2, 4);
+                        break;
+
+                    case 2: // Categories: Tag / Label Badge
+                        Point[] tag = {
+                            new Point(x + 2, y + 8),
+                            new Point(x + 8, y + 2),
+                            new Point(x + 14, y + 8),
+                            new Point(x + 8, y + 14)
+                        };
+                        g.DrawPolygon(pen, tag);
+                        g.FillEllipse(brush, x + 7, y + 4, 3, 3);
+                        break;
+
+                    case 3: // Purchase Orders: Order Clipboard
+                        g.DrawRectangle(pen, x + 2, y + 3, 12, 11);
+                        g.FillRectangle(brush, x + 5, y + 1, 6, 3);
+                        g.DrawLine(pen, x + 5, y + 6, x + 11, y + 6);
+                        g.DrawLine(pen, x + 5, y + 9, x + 11, y + 9);
+                        g.DrawLine(pen, x + 5, y + 12, x + 9, y + 12);
+                        break;
+
+                    case 4: // Reports: Ascending Bar Chart
+                        g.DrawLine(pen, x + 1, y + 14, x + 15, y + 14);
+                        g.FillRectangle(brush, x + 2, y + 9, 3, 5);
+                        g.FillRectangle(brush, x + 6, y + 5, 3, 9);
+                        g.FillRectangle(brush, x + 10, y + 2, 3, 12);
+                        break;
+                }
+            }
         }
 
         public static void StyleButton(Button btn)
         {
             string name = btn.Name.ToLowerInvariant();
             btn.FlatStyle = FlatStyle.Flat;
+            btn.FlatAppearance.BorderSize = 0;
             btn.Cursor = Cursors.Hand;
+
+            // Multiline labels for challenge and receipt buttons
+            if (name.Contains("receivepo"))
+            {
+                btn.Text = "Receive Selected PO\n[Update Stock In]";
+            }
+            else if (name.Contains("receivetwice"))
+            {
+                btn.Text = "Challenge 1:\nReceive Twice Rollback";
+            }
+            else if (name.Contains("duplicateline"))
+            {
+                btn.Text = "Challenge 2:\nDuplicate Line Rollback";
+            }
+
+            // Clip button window to smooth pill capsule geometry
+            UpdatePillRegion(btn);
+
+            btn.Resize -= Btn_PillResize;
+            btn.Resize += Btn_PillResize;
+
+            btn.Paint -= Button_PillPaint;
+            btn.Paint += Button_PillPaint;
+
+            btn.MouseEnter -= Btn_Invalidate;
+            btn.MouseEnter += Btn_Invalidate;
+            btn.MouseLeave -= Btn_Invalidate;
+            btn.MouseLeave += Btn_Invalidate;
+            btn.MouseDown -= Btn_InvalidateMouse;
+            btn.MouseDown += Btn_InvalidateMouse;
+            btn.MouseUp -= Btn_InvalidateMouse;
+            btn.MouseUp += Btn_InvalidateMouse;
+        }
+
+        private static void Btn_PillResize(object sender, EventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn != null)
+            {
+                UpdatePillRegion(btn);
+            }
+        }
+
+        private static void UpdatePillRegion(Button btn)
+        {
+            if (btn.Width <= 0 || btn.Height <= 0) return;
+            using (GraphicsPath path = GetCapsulePath(new Rectangle(0, 0, btn.Width, btn.Height), btn.Height / 2))
+            {
+                btn.Region = new Region(path);
+            }
+        }
+
+        private static void Btn_Invalidate(object sender, EventArgs e)
+        {
+            (sender as Control)?.Invalidate();
+        }
+
+        private static void Btn_InvalidateMouse(object sender, MouseEventArgs e)
+        {
+            (sender as Control)?.Invalidate();
+        }
+
+        private static void Button_PillPaint(object sender, PaintEventArgs e)
+        {
+            Button btn = sender as Button;
+            if (btn == null) return;
+
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.TextRenderingHint = TextRenderingHint.ClearTypeGridFit;
+
+            Color bg, fg, border, hoverBg, pressBg;
+            GetButtonPalette(btn, out bg, out fg, out border, out hoverBg, out pressBg);
+
+            Point mousePos = btn.PointToClient(Control.MousePosition);
+            bool isHover = btn.Enabled && btn.ClientRectangle.Contains(mousePos);
+            bool isPress = isHover && (Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left;
+
+            Color curBg = !btn.Enabled ? Color.FromArgb(243, 242, 241) : (isPress ? pressBg : (isHover ? hoverBg : bg));
+            Color curFg = !btn.Enabled ? Color.FromArgb(161, 159, 157) : fg;
+            Color curBorder = !btn.Enabled ? Color.FromArgb(225, 223, 221) : border;
+
+            // Draw smooth capsule background & border
+            Rectangle rect = new Rectangle(0, 0, btn.Width - 1, btn.Height - 1);
+            using (GraphicsPath path = GetCapsulePath(rect, rect.Height / 2))
+            {
+                using (SolidBrush fillBrush = new SolidBrush(curBg))
+                {
+                    e.Graphics.FillPath(fillBrush, path);
+                }
+                if (curBorder != Color.Transparent)
+                {
+                    using (Pen borderPen = new Pen(curBorder, 1.2f))
+                    {
+                        e.Graphics.DrawPath(borderPen, path);
+                    }
+                }
+            }
+
+            // Draw centered button text (supports multi-line)
+            using (Font font = new Font(btn.Font.FontFamily, btn.Font.Size > 0 ? btn.Font.Size : 9F, btn.Font.Style))
+            using (SolidBrush textBrush = new SolidBrush(curFg))
+            using (StringFormat sf = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            })
+            {
+                e.Graphics.DrawString(btn.Text, font, textBrush, rect, sf);
+            }
+        }
+
+        private static void GetButtonPalette(Button btn, out Color bg, out Color fg, out Color border, out Color hoverBg, out Color pressBg)
+        {
+            string name = (btn.Name ?? "").ToLowerInvariant();
 
             // 1. Challenge Demonstration Buttons
             if (name.Contains("test") || name.Contains("challenge"))
             {
-                btn.BackColor = ExcelMint;           // #E8F8EE Excel Mint Tint
-                btn.ForeColor = ExcelGreenDark;      // #0E6E38 Deep Excel Green
-                btn.Font = new Font("Segoe UI", 8F, FontStyle.Bold);
-                btn.FlatAppearance.BorderColor = ExcelMintBorder; // #A3E2B9
-                btn.FlatAppearance.BorderSize = 1;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(209, 245, 222);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(163, 226, 185);
-
-                if (name.Contains("receive"))
-                {
-                    btn.Text = "Challenge 1:\nReceive Twice Rollback";
-                }
-                else if (name.Contains("duplicate"))
-                {
-                    btn.Text = "Challenge 2:\nDuplicate Line Rollback";
-                }
+                bg = ExcelMint;
+                fg = ExcelGreenDark;
+                border = ExcelMintBorder;
+                hoverBg = Color.FromArgb(209, 245, 222);
+                pressBg = Color.FromArgb(163, 226, 185);
             }
-            // 2. Hero Primary CTA Buttons (Solid Microsoft Excel Green #107C41)
+            // 2. Primary Hero Buttons (Add, Save, Receive, Create PO) - Solid Excel Green Pill
             else if (name.Contains("add") || name.Contains("save") || name.Contains("receive") || name.Contains("createdraft"))
             {
-                btn.BackColor = ExcelGreen;
-                btn.ForeColor = Color.White;
-                btn.Font = new Font("Segoe UI", 9.25F, FontStyle.Bold);
-                btn.FlatAppearance.BorderSize = 0;
-                btn.FlatAppearance.MouseOverBackColor = ExcelGreenDark;
-                btn.FlatAppearance.MouseDownBackColor = ExcelGreenDeep;
-
-                if (name == "btnreceivepo")
-                {
-                    btn.Text = "Receive Selected PO\n[Update Stock In]";
-                }
+                bg = ExcelGreen;
+                fg = Color.White;
+                border = ExcelGreenDark;
+                hoverBg = ExcelGreenDark;
+                pressBg = ExcelGreenDeep;
             }
-            // 3. Secondary Actions (Update) - Mint tint with green border & text
+            // 3. Secondary Actions (Update) - Excel Mint Tint Pill
             else if (name.Contains("update"))
             {
-                btn.BackColor = ExcelMint;
-                btn.ForeColor = ExcelGreenDark;
-                btn.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-                btn.FlatAppearance.BorderColor = ExcelMintBorder;
-                btn.FlatAppearance.BorderSize = 1;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(209, 245, 222);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(163, 226, 185);
+                bg = ExcelMint;
+                fg = ExcelGreenDark;
+                border = ExcelMintBorder;
+                hoverBg = Color.FromArgb(209, 245, 222);
+                pressBg = Color.FromArgb(163, 226, 185);
             }
-            // 4. Danger / Destructive Actions (Delete)
+            // 4. Danger / Destructive Actions (Delete) - Soft Rose Pill
             else if (name.Contains("delete"))
             {
-                btn.BackColor = Color.FromArgb(253, 243, 242); // Soft Excel rose wash
-                btn.ForeColor = Color.FromArgb(168, 0, 0);     // #A80000 Office Red
-                btn.Font = new Font("Segoe UI", 8.75F, FontStyle.Bold);
-                btn.FlatAppearance.BorderColor = Color.FromArgb(241, 169, 160);
-                btn.FlatAppearance.BorderSize = 1;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(250, 226, 224);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(244, 192, 187);
+                bg = Color.FromArgb(253, 243, 242);
+                fg = SemanticDanger; // #A80000
+                border = Color.FromArgb(241, 169, 160);
+                hoverBg = Color.FromArgb(250, 226, 224);
+                pressBg = Color.FromArgb(244, 192, 187);
             }
-            // 5. Secondary Ghost / Outline Actions (Search, Refresh, Clear, Generate)
+            // 5. Secondary Outline / Ghost Actions (Clear, Search, Refresh, Filter, Show All) - White Pill with subtle border
             else
             {
-                btn.BackColor = SurfaceCard;
-                btn.ForeColor = TextMuted;
-                btn.Font = new Font("Segoe UI", 8.75F, FontStyle.Regular);
-                btn.FlatAppearance.BorderColor = BorderControl;
-                btn.FlatAppearance.BorderSize = 1;
-                btn.FlatAppearance.MouseOverBackColor = Color.FromArgb(244, 246, 244);
-                btn.FlatAppearance.MouseDownBackColor = Color.FromArgb(225, 223, 221);
+                bg = SurfaceCard; // Pure White #FFFFFF
+                fg = Color.FromArgb(50, 49, 48); // Crisp Dark Slate
+                border = BorderControl; // #C8C6C4
+                hoverBg = Color.FromArgb(244, 246, 244);
+                pressBg = Color.FromArgb(225, 223, 221);
             }
+        }
+
+        public static GraphicsPath GetCapsulePath(Rectangle rect, int radius)
+        {
+            GraphicsPath path = new GraphicsPath();
+            if (rect.Width <= 0 || rect.Height <= 0) return path;
+
+            int diameter = radius * 2;
+            if (diameter > rect.Height) diameter = rect.Height;
+            if (diameter > rect.Width) diameter = rect.Width;
+            if (diameter <= 0) diameter = 1;
+
+            Rectangle arc = new Rectangle(rect.X, rect.Y, diameter, diameter);
+            path.AddArc(arc, 90, 180);
+            arc.X = rect.Right - diameter;
+            path.AddArc(arc, 270, 180);
+            path.CloseFigure();
+
+            return path;
         }
 
         public static void StyleComboBox(ComboBox cb)
