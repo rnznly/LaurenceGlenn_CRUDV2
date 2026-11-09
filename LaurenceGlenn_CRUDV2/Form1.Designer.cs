@@ -1241,7 +1241,7 @@ namespace LaurenceGlenn_CRUDV2
             // 
             this.lblAppTitle.AutoSize = true;
             this.lblAppTitle.Font = new System.Drawing.Font("Segoe UI", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblAppTitle.ForeColor = System.Drawing.Color.MidnightBlue;
+            this.lblAppTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(16)))), ((int)(((byte)(124)))), ((int)(((byte)(65)))));
             this.lblAppTitle.Location = new System.Drawing.Point(15, 10);
             this.lblAppTitle.Name = "lblAppTitle";
             this.lblAppTitle.Size = new System.Drawing.Size(624, 25);

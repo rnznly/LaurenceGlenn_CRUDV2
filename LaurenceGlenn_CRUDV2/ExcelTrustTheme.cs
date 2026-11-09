@@ -139,7 +139,7 @@ namespace LaurenceGlenn_CRUDV2
             if (lbl.Name == "lblAppTitle")
             {
                 lbl.Text = "Inventory & Purchase Order Management System";
-                lbl.ForeColor = TitleNavy; // Deep Navy Blue (#002060)
+                lbl.ForeColor = ExcelGreen; // Microsoft Excel Trust Green (#107C41)
                 lbl.Font = new Font("Segoe UI", 13.5F, FontStyle.Bold);
             }
             else if (lbl.Name == "lblProductCost" || lbl.Name == "lblPOLineCost")
@@ -236,6 +236,10 @@ namespace LaurenceGlenn_CRUDV2
             using (SolidBrush bgBrush = new SolidBrush(CanvasBg))
             {
                 e.Graphics.FillRectangle(bgBrush, rect);
+                if (e.Index == tc.TabCount - 1)
+                {
+                    e.Graphics.FillRectangle(bgBrush, rect.Right - 1, rect.Y, 4, rect.Height);
+                }
             }
 
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
@@ -292,6 +296,19 @@ namespace LaurenceGlenn_CRUDV2
             using (StringFormat sf = new StringFormat { LineAlignment = StringAlignment.Center, FormatFlags = StringFormatFlags.NoWrap })
             {
                 e.Graphics.DrawString(page.Text, textFont, textBrush, textRect, sf);
+            }
+
+            // 4. Clean, centered vertical hairline dividers between adjacent tab buttons
+            using (Pen divPen = new Pen(Color.FromArgb(120, 120, 120), 1f))
+            {
+                if (e.Index > 0)
+                {
+                    e.Graphics.DrawLine(divPen, rect.X, rect.Y + 8, rect.X, rect.Bottom - 8);
+                }
+                if (e.Index < tc.TabCount - 1)
+                {
+                    e.Graphics.DrawLine(divPen, rect.Right, rect.Y + 8, rect.Right, rect.Bottom - 8);
+                }
             }
         }
 
@@ -687,7 +704,7 @@ namespace LaurenceGlenn_CRUDV2
             if (dgv == null) return;
 
             // Clean Excel Sheet: Hide internal foreign key database IDs from view
-            string[] hiddenColumns = { "ProductId", "CategoryId", "SupplierId", "PurchaseOrderId", "PurchaseOrderLineId" };
+            string[] hiddenColumns = { "ProductId", "CategoryId", "SupplierId", "PurchaseOrderId", "PurchaseOrderLineId", "MovementId", "Movementid", "StockMovementId" };
             foreach (string colName in hiddenColumns)
             {
                 if (dgv.Columns.Contains(colName))

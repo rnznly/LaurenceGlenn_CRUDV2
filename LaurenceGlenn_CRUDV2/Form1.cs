@@ -71,7 +71,8 @@ namespace LaurenceGlenn_CRUDV2
                     grpPOActions, grpPOLineEntry, dgvPOLines,
                     grpLowStock, dgvLowStock, grpPOReport, dgvPOReport,
                     grpStockMovements, dgvStockMovements,
-                    txtPONumber, btnGeneratePONumber, cmbPOSupplier, btnCreateDraftPO, btnRefreshPOs
+                    txtPONumber, btnGeneratePONumber, cmbPOSupplier, btnCreateDraftPO, btnRefreshPOs,
+                    btnRefreshLowStock, btnFilterPOReport, cmbFilterPOStatus, btnRefreshMovements
                 };
 
                 foreach (Control c in fixedControls)
@@ -292,30 +293,62 @@ namespace LaurenceGlenn_CRUDV2
                     if (grpLowStock != null && grpPOReport != null && grpStockMovements != null)
                     {
                         int rHalfW = (contentW - 35) / 2;
-                        int topH = Math.Max(180, contentH - 255);
+                        int topH = Math.Max(180, (contentH - 55) / 2);
 
+                        // Top-Left: Low Stock Warning Card
                         grpLowStock.Left = 15;
                         grpLowStock.Top = 15;
                         grpLowStock.Width = rHalfW;
                         grpLowStock.Height = topH;
-                        dgvLowStock.Width = rHalfW - 25;
-                        dgvLowStock.Height = Math.Max(80, topH - 65);
-                        btnRefreshLowStock.Left = rHalfW - 160;
 
+                        btnRefreshLowStock.Width = 145;
+                        btnRefreshLowStock.Height = 28;
+                        btnRefreshLowStock.Left = rHalfW - 15 - 145;
+                        btnRefreshLowStock.Top = 18;
+
+                        dgvLowStock.Left = 15;
+                        dgvLowStock.Top = 55;
+                        dgvLowStock.Width = rHalfW - 30;
+                        dgvLowStock.Height = Math.Max(80, topH - 70);
+
+                        // Top-Right: Purchase Order Status Summary Card
                         grpPOReport.Left = rHalfW + 25;
                         grpPOReport.Top = 15;
                         grpPOReport.Width = rHalfW;
                         grpPOReport.Height = topH;
-                        dgvPOReport.Width = rHalfW - 25;
-                        dgvPOReport.Height = Math.Max(80, topH - 75);
 
+                        lblFilterPOStatus.Left = 15;
+                        lblFilterPOStatus.Top = 22;
+                        cmbFilterPOStatus.Left = 65;
+                        cmbFilterPOStatus.Top = 18;
+                        cmbFilterPOStatus.Width = 120;
+
+                        btnFilterPOReport.Left = 195;
+                        btnFilterPOReport.Top = 17;
+                        btnFilterPOReport.Width = 100;
+                        btnFilterPOReport.Height = 28;
+
+                        dgvPOReport.Left = 15;
+                        dgvPOReport.Top = 55;
+                        dgvPOReport.Width = rHalfW - 30;
+                        dgvPOReport.Height = Math.Max(80, topH - 70);
+
+                        // Bottom: Stock Movement Audit Trail (Full Width Card)
+                        int auditTop = topH + 30; // 15px clean gap below top cards
                         grpStockMovements.Left = 15;
-                        grpStockMovements.Top = topH + 25;
+                        grpStockMovements.Top = auditTop;
                         grpStockMovements.Width = contentW - 25;
-                        grpStockMovements.Height = Math.Max(150, contentH - topH - 35);
-                        dgvStockMovements.Width = grpStockMovements.Width - 25;
-                        dgvStockMovements.Height = grpStockMovements.Height - 65;
-                        btnRefreshMovements.Left = grpStockMovements.Width - 150;
+                        grpStockMovements.Height = Math.Max(160, contentH - auditTop - 10);
+
+                        btnRefreshMovements.Width = 145;
+                        btnRefreshMovements.Height = 28;
+                        btnRefreshMovements.Left = grpStockMovements.Width - 15 - 145;
+                        btnRefreshMovements.Top = 18; // Cleanly inside header area
+
+                        dgvStockMovements.Left = 15;
+                        dgvStockMovements.Top = 55;
+                        dgvStockMovements.Width = grpStockMovements.Width - 30;
+                        dgvStockMovements.Height = Math.Max(100, grpStockMovements.Height - 70);
                     }
                 }
             }
