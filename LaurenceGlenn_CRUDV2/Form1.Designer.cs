@@ -355,7 +355,7 @@ namespace LaurenceGlenn_CRUDV2
             this.lblProductCost.Name = "lblProductCost";
             this.lblProductCost.Size = new System.Drawing.Size(77, 15);
             this.lblProductCost.TabIndex = 12;
-            this.lblProductCost.Text = "Unit Cost (â‚±):";
+            this.lblProductCost.Text = "Unit Cost (\u20B1):";
             // 
             // cmbProductSupplier
             // 
@@ -860,7 +860,7 @@ namespace LaurenceGlenn_CRUDV2
             this.lblPOTotalAmount.Name = "lblPOTotalAmount";
             this.lblPOTotalAmount.Size = new System.Drawing.Size(183, 20);
             this.lblPOTotalAmount.TabIndex = 9;
-            this.lblPOTotalAmount.Text = "Total PO Amount: â‚± 0.00";
+            this.lblPOTotalAmount.Text = "Total PO Amount: \u20B1 0.00";
             // 
             // dgvPOLines
             // 
@@ -907,7 +907,7 @@ namespace LaurenceGlenn_CRUDV2
             this.lblPOLineCost.Name = "lblPOLineCost";
             this.lblPOLineCost.Size = new System.Drawing.Size(77, 15);
             this.lblPOLineCost.TabIndex = 5;
-            this.lblPOLineCost.Text = "Unit Cost (â‚±):";
+            this.lblPOLineCost.Text = "Unit Cost (\u20B1):";
             // 
             // nudPOLineQty
             // 
@@ -1062,9 +1062,10 @@ namespace LaurenceGlenn_CRUDV2
             // 
             // txtPONumber
             // 
-            this.txtPONumber.Location = new System.Drawing.Point(20, 55);
+            this.txtPONumber.AutoSize = false;
+            this.txtPONumber.Location = new System.Drawing.Point(15, 48);
             this.txtPONumber.Name = "txtPONumber";
-            this.txtPONumber.Size = new System.Drawing.Size(125, 23);
+            this.txtPONumber.Size = new System.Drawing.Size(125, 28);
             this.txtPONumber.TabIndex = 1;
             // 
             // lblPONumber

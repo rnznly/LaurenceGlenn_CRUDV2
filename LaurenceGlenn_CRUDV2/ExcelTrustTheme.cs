@@ -144,14 +144,15 @@ namespace LaurenceGlenn_CRUDV2
             }
             else if (lbl.Name == "lblProductCost" || lbl.Name == "lblPOLineCost")
             {
-                lbl.Text = "Unit Cost (PHP):";
+                lbl.Text = "Unit Cost (\u20B1):";
                 lbl.ForeColor = TextMuted;
                 lbl.Font = new Font("Segoe UI", 8.75F, FontStyle.Regular);
             }
             else if (lbl.Name == "lblPOTotalAmount")
             {
+                lbl.Text = "Total PO Amount: \u20B1 0.00";
                 lbl.ForeColor = ExcelGreen;
-                lbl.Font = new Font("Cascadia Mono", 11F, FontStyle.Bold);
+                lbl.Font = new Font("Segoe UI", 10.5F, FontStyle.Bold);
             }
             else if (lbl.Name == "lblSelectedPO")
             {
@@ -207,6 +208,18 @@ namespace LaurenceGlenn_CRUDV2
                     TextPrimary,
                     TextFormatFlags.NoPrefix
                 );
+            }
+
+            // 5. Draw clean, visible modern border around all child ComboBox controls
+            foreach (Control child in gb.Controls)
+            {
+                if (child is ComboBox cb && cb.Visible)
+                {
+                    using (Pen borderPen = new Pen(Color.FromArgb(130, 130, 130), 1f))
+                    {
+                        e.Graphics.DrawRectangle(borderPen, cb.Left - 1, cb.Top - 1, cb.Width + 1, cb.Height + 1);
+                    }
+                }
             }
         }
 
@@ -621,6 +634,21 @@ namespace LaurenceGlenn_CRUDV2
 
             cb.DrawItem -= Cb_DrawItem;
             cb.DrawItem += Cb_DrawItem;
+
+            cb.LocationChanged -= Cb_InvalidateParent;
+            cb.LocationChanged += Cb_InvalidateParent;
+            cb.SizeChanged -= Cb_InvalidateParent;
+            cb.SizeChanged += Cb_InvalidateParent;
+            cb.VisibleChanged -= Cb_InvalidateParent;
+            cb.VisibleChanged += Cb_InvalidateParent;
+            cb.SelectedIndexChanged -= Cb_InvalidateParent;
+            cb.SelectedIndexChanged += Cb_InvalidateParent;
+        }
+
+        private static void Cb_InvalidateParent(object sender, EventArgs e)
+        {
+            Control c = sender as Control;
+            c?.Parent?.Invalidate();
         }
 
         private static void Cb_DrawItem(object sender, DrawItemEventArgs e)

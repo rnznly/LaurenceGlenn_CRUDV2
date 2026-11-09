@@ -72,7 +72,8 @@ namespace LaurenceGlenn_CRUDV2
                     grpLowStock, dgvLowStock, grpPOReport, dgvPOReport,
                     grpStockMovements, dgvStockMovements,
                     txtPONumber, btnGeneratePONumber, cmbPOSupplier, btnCreateDraftPO, btnRefreshPOs,
-                    btnRefreshLowStock, btnFilterPOReport, cmbFilterPOStatus, btnRefreshMovements
+                    btnRefreshLowStock, btnFilterPOReport, cmbFilterPOStatus, btnRefreshMovements,
+                    lblPOTotalAmount
                 };
 
                 foreach (Control c in fixedControls)
@@ -213,12 +214,13 @@ namespace LaurenceGlenn_CRUDV2
 
                         // Precise Alignment inside grpPOCreate:
                         lblPONumber.Left = 15;
-                        lblPONumber.Top = 28;
+                        lblPONumber.Top = 26;
 
+                        txtPONumber.AutoSize = false;
                         txtPONumber.Left = 15;
-                        txtPONumber.Top = 49;
+                        txtPONumber.Top = 48;
                         txtPONumber.Width = 125;
-                        txtPONumber.Height = 26;
+                        txtPONumber.Height = 28;
 
                         btnGeneratePONumber.Left = 148;
                         btnGeneratePONumber.Top = 48;
@@ -226,7 +228,7 @@ namespace LaurenceGlenn_CRUDV2
                         btnGeneratePONumber.Height = 28;
 
                         lblPOSupplier.Left = 252;
-                        lblPOSupplier.Top = 28;
+                        lblPOSupplier.Top = 26;
 
                         btnCreateDraftPO.Width = 145;
                         btnCreateDraftPO.Height = 42;
@@ -234,8 +236,8 @@ namespace LaurenceGlenn_CRUDV2
                         btnCreateDraftPO.Top = 35;
 
                         cmbPOSupplier.Left = 252;
-                        cmbPOSupplier.Top = 49;
-                        cmbPOSupplier.Height = 26;
+                        cmbPOSupplier.Top = 48;
+                        cmbPOSupplier.Height = 28;
                         cmbPOSupplier.Width = Math.Max(120, (btnCreateDraftPO.Left - 15) - 252);
 
                         // Bottom-Left: PO List Card
@@ -284,9 +286,12 @@ namespace LaurenceGlenn_CRUDV2
                         grpPOLineEntry.Width = halfW;
                         grpPOLineEntry.Height = bottomH;
                         dgvPOLines.Left = 15;
-                        dgvPOLines.Top = 145;
+                        dgvPOLines.Top = 135;
                         dgvPOLines.Width = halfW - 30;
-                        dgvPOLines.Height = Math.Max(100, bottomH - 160);
+                        dgvPOLines.Height = Math.Max(100, bottomH - 175);
+
+                        lblPOTotalAmount.Top = dgvPOLines.Bottom + 8;
+                        lblPOTotalAmount.Left = Math.Max(15, grpPOLineEntry.Width - 15 - lblPOTotalAmount.Width);
                     }
 
                     // 5. Reports Tab Layout
@@ -317,16 +322,18 @@ namespace LaurenceGlenn_CRUDV2
                         grpPOReport.Width = rHalfW;
                         grpPOReport.Height = topH;
 
-                        lblFilterPOStatus.Left = 15;
-                        lblFilterPOStatus.Top = 22;
-                        cmbFilterPOStatus.Left = 65;
-                        cmbFilterPOStatus.Top = 18;
-                        cmbFilterPOStatus.Width = 120;
-
-                        btnFilterPOReport.Left = 195;
-                        btnFilterPOReport.Top = 17;
-                        btnFilterPOReport.Width = 100;
+                        btnFilterPOReport.Width = 90;
                         btnFilterPOReport.Height = 28;
+                        btnFilterPOReport.Top = 18;
+                        btnFilterPOReport.Left = rHalfW - 15 - 90;
+
+                        cmbFilterPOStatus.Width = 110;
+                        cmbFilterPOStatus.Height = 28;
+                        cmbFilterPOStatus.Top = 18;
+                        cmbFilterPOStatus.Left = btnFilterPOReport.Left - 8 - 110;
+
+                        lblFilterPOStatus.Top = 23;
+                        lblFilterPOStatus.Left = cmbFilterPOStatus.Left - 8 - lblFilterPOStatus.Width;
 
                         dgvPOReport.Left = 15;
                         dgvPOReport.Top = 55;
@@ -1086,7 +1093,7 @@ namespace LaurenceGlenn_CRUDV2
                     dgvPOLines.DataSource = lines;
 
                     decimal total = lines.Sum(l => l.Subtotal);
-                    lblPOTotalAmount.Text = "Total PO Amount: ₱ " + total.ToString("N2");
+                    lblPOTotalAmount.Text = "Total PO Amount: \u20B1 " + total.ToString("N2");
                 }
             }
             catch (Exception ex)
