@@ -293,39 +293,58 @@ namespace LaurenceGlenn_CRUDV2
                             lblSelectedPO.Top = 25;
                         }
 
-                        // Labels row: Top = 50 with generous spacing
-                        if (lblPOLineProduct != null) { lblPOLineProduct.Left = 15; lblPOLineProduct.Top = 50; }
-                        if (lblPOLineQty != null)     { lblPOLineQty.Left = 240; lblPOLineQty.Top = 50; }
-                        if (lblPOLineCost != null)    { lblPOLineCost.Left = 340; lblPOLineCost.Top = 50; }
+                        // Fill the gaps: Dynamically span the full card width, leaving no empty space on the right
+                        int btnW = 140;
+                        int costW = 125;
+                        int qtyW = 90;
+                        int gap = 15;
 
-                        // Inputs row: Top = 72, Height = 28, aligned with square Add Line Item button
+                        if (btnAddPOLine != null)
+                        {
+                            btnAddPOLine.Width = btnW;
+                            btnAddPOLine.Height = 50;
+                            btnAddPOLine.Left = halfW - 15 - btnW;
+                            btnAddPOLine.Top = 50; // Spans from label row to bottom of inputs, eliminating vertical & horizontal gaps
+                        }
+
+                        if (nudPOLineCost != null)
+                        {
+                            nudPOLineCost.Width = costW;
+                            nudPOLineCost.Height = 28;
+                            nudPOLineCost.Left = (btnAddPOLine != null ? btnAddPOLine.Left : (halfW - 15 - btnW)) - gap - costW;
+                            nudPOLineCost.Top = 72;
+                        }
+                        if (lblPOLineCost != null)
+                        {
+                            lblPOLineCost.Left = nudPOLineCost != null ? nudPOLineCost.Left : 340;
+                            lblPOLineCost.Top = 50;
+                        }
+
+                        if (nudPOLineQty != null)
+                        {
+                            nudPOLineQty.Width = qtyW;
+                            nudPOLineQty.Height = 28;
+                            nudPOLineQty.Left = (nudPOLineCost != null ? nudPOLineCost.Left : 450) - gap - qtyW;
+                            nudPOLineQty.Top = 72;
+                        }
+                        if (lblPOLineQty != null)
+                        {
+                            lblPOLineQty.Left = nudPOLineQty != null ? nudPOLineQty.Left : 240;
+                            lblPOLineQty.Top = 50;
+                        }
+
                         if (cmbPOLineProduct != null)
                         {
                             cmbPOLineProduct.Left = 15;
                             cmbPOLineProduct.Top = 72;
-                            cmbPOLineProduct.Width = 210;
                             cmbPOLineProduct.Height = 28;
+                            int rightLimit = (nudPOLineQty != null ? nudPOLineQty.Left : 340) - gap;
+                            cmbPOLineProduct.Width = Math.Max(160, rightLimit - 15);
                         }
-                        if (nudPOLineQty != null)
+                        if (lblPOLineProduct != null)
                         {
-                            nudPOLineQty.Left = 240;
-                            nudPOLineQty.Top = 72;
-                            nudPOLineQty.Width = 85;
-                            nudPOLineQty.Height = 28;
-                        }
-                        if (nudPOLineCost != null)
-                        {
-                            nudPOLineCost.Left = 340;
-                            nudPOLineCost.Top = 72;
-                            nudPOLineCost.Width = 110;
-                            nudPOLineCost.Height = 28;
-                        }
-                        if (btnAddPOLine != null)
-                        {
-                            btnAddPOLine.Left = 465;
-                            btnAddPOLine.Top = 72;
-                            btnAddPOLine.Width = 115;
-                            btnAddPOLine.Height = 28;
+                            lblPOLineProduct.Left = 15;
+                            lblPOLineProduct.Top = 50;
                         }
 
                         dgvPOLines.Left = 15;

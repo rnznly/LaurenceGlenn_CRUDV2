@@ -879,9 +879,9 @@ namespace LaurenceGlenn_CRUDV2
             // 
             // btnAddPOLine
             // 
-            this.btnAddPOLine.Location = new System.Drawing.Point(475, 75);
+            this.btnAddPOLine.Location = new System.Drawing.Point(440, 50);
             this.btnAddPOLine.Name = "btnAddPOLine";
-            this.btnAddPOLine.Size = new System.Drawing.Size(115, 28);
+            this.btnAddPOLine.Size = new System.Drawing.Size(140, 50);
             this.btnAddPOLine.TabIndex = 7;
             this.btnAddPOLine.Text = "Add Line Item";
             this.btnAddPOLine.UseVisualStyleBackColor = true;
