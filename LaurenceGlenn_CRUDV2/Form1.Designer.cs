@@ -166,6 +166,7 @@ namespace LaurenceGlenn_CRUDV2
             this.tabControlMain.Controls.Add(this.tabPurchaseOrders);
             this.tabControlMain.Controls.Add(this.tabReports);
             this.tabControlMain.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tabControlMain.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControlMain.Location = new System.Drawing.Point(12, 45);
             this.tabControlMain.Name = "tabControlMain";
             this.tabControlMain.SelectedIndex = 0;
@@ -187,6 +188,7 @@ namespace LaurenceGlenn_CRUDV2
             // 
             // grpProductSearch
             // 
+            this.grpProductSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.grpProductSearch.Controls.Add(this.btnRefreshProducts);
             this.grpProductSearch.Controls.Add(this.btnSearchProduct);
             this.grpProductSearch.Controls.Add(this.txtProductSearch);
@@ -240,6 +242,7 @@ namespace LaurenceGlenn_CRUDV2
             this.dgvProducts.AllowUserToDeleteRows = false;
             this.dgvProducts.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvProducts.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvProducts.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvProducts.Location = new System.Drawing.Point(400, 85);
             this.dgvProducts.MultiSelect = false;
             this.dgvProducts.Name = "dgvProducts";
@@ -493,6 +496,7 @@ namespace LaurenceGlenn_CRUDV2
             // 
             // grpSupplierSearch
             // 
+            this.grpSupplierSearch.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.grpSupplierSearch.Controls.Add(this.btnRefreshSuppliers);
             this.grpSupplierSearch.Controls.Add(this.btnSearchSupplier);
             this.grpSupplierSearch.Controls.Add(this.txtSupplierSearch);
@@ -688,6 +692,7 @@ namespace LaurenceGlenn_CRUDV2
             this.dgvCategories.AllowUserToDeleteRows = false;
             this.dgvCategories.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvCategories.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvCategories.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) | System.Windows.Forms.AnchorStyles.Left) | System.Windows.Forms.AnchorStyles.Right)));
             this.dgvCategories.Location = new System.Drawing.Point(420, 20);
             this.dgvCategories.MultiSelect = false;
             this.dgvCategories.Name = "dgvCategories";

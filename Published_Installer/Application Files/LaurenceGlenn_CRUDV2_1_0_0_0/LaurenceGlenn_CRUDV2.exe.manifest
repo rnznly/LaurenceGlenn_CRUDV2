@@ -42,14 +42,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LaurenceGlenn_CRUDV2.exe" size="116224">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="LaurenceGlenn_CRUDV2.exe" size="128000">
       <assemblyIdentity name="LaurenceGlenn_CRUDV2" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>iJp9RI/Xm/uxhtO9VbLnMHx5WUN1Q6gTMmqi02uyn+E=</dsig:DigestValue>
+        <dsig:DigestValue>ndZaGhak55+f6T/GaGyHWy7igVmGInAEaur2QL1QMtU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

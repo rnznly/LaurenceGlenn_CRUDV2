@@ -22,6 +22,7 @@ namespace LaurenceGlenn_CRUDV2
         {
             try
             {
+                ExcelTrustTheme.Apply(this);
                 using (BernadoDataContext db = new BernadoDataContext())
                 {
                     if (!db.DatabaseExists())
@@ -42,11 +43,92 @@ namespace LaurenceGlenn_CRUDV2
                 cmbSupplierStatus.SelectedIndex = 0;
                 cmbFilterPOStatus.SelectedIndex = 0;
                 GenerateNewPONumber();
+
+                this.Resize += (s, args) => AdjustResponsiveLayout();
+                tabControlMain.SelectedIndexChanged += (s, args) => AdjustResponsiveLayout();
+                AdjustResponsiveLayout();
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error initializing application (LINQ to SQL): " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+
+        private void AdjustResponsiveLayout()
+        {
+            try
+            {
+                if (tabControlMain == null || tabControlMain.TabCount == 0) return;
+
+                int mainW = tabControlMain.ClientSize.Width;
+                int mainH = tabControlMain.ClientSize.Height;
+
+                int tabHeaderW = (mainW - 12) / tabControlMain.TabCount;
+                tabControlMain.ItemSize = new System.Drawing.Size(Math.Max(tabHeaderW, 130), 38);
+
+                if (mainW > 600 && mainH > 400)
+                {
+                    int contentW = mainW - 10;
+                    int contentH = mainH - 45;
+
+                    // Purchase Orders Tab Layout
+                    if (grpPOCreate != null && grpPOActions != null)
+                    {
+                        int halfW = (contentW - 35) / 2;
+                        int bottomH = contentH - 120;
+
+                        grpPOCreate.Width = halfW;
+                        grpPOList.Width = halfW;
+                        grpPOList.Height = bottomH;
+                        dgvPurchaseOrders.Width = halfW - 25;
+                        dgvPurchaseOrders.Height = bottomH - 65;
+                        btnRefreshPOs.Left = halfW - 125;
+
+                        grpPOActions.Left = halfW + 20;
+                        grpPOActions.Width = halfW;
+                        int actBtnW = (halfW - 36) / 3;
+                        btnReceivePO.Left = 10;
+                        btnReceivePO.Width = actBtnW;
+                        btnTestReceiveTwice.Left = 10 + actBtnW + 8;
+                        btnTestReceiveTwice.Width = actBtnW;
+                        btnTestDuplicateLine.Left = 10 + (actBtnW + 8) * 2;
+                        btnTestDuplicateLine.Width = actBtnW;
+
+                        grpPOLineEntry.Left = halfW + 20;
+                        grpPOLineEntry.Width = halfW;
+                        grpPOLineEntry.Height = bottomH;
+                        dgvPOLines.Width = halfW - 25;
+                        dgvPOLines.Height = bottomH - 165;
+                    }
+
+                    // Reports Tab Layout
+                    if (grpLowStock != null && grpPOReport != null)
+                    {
+                        int rHalfW = (contentW - 35) / 2;
+                        int topH = contentH - 235;
+
+                        grpLowStock.Width = rHalfW;
+                        grpLowStock.Height = topH;
+                        dgvLowStock.Width = rHalfW - 25;
+                        dgvLowStock.Height = topH - 65;
+                        btnRefreshLowStock.Left = rHalfW - 160;
+
+                        grpPOReport.Left = rHalfW + 20;
+                        grpPOReport.Width = rHalfW;
+                        grpPOReport.Height = topH;
+                        dgvPOReport.Width = rHalfW - 25;
+                        dgvPOReport.Height = topH - 75;
+
+                        grpStockMovements.Top = topH + 20;
+                        grpStockMovements.Width = contentW - 15;
+                        grpStockMovements.Height = 205;
+                        dgvStockMovements.Width = grpStockMovements.Width - 25;
+                        btnRefreshMovements.Left = grpStockMovements.Width - 150;
+                    }
+                }
+            }
+            catch { }
         }
 
         #region Categories CRUD
@@ -742,15 +824,15 @@ namespace LaurenceGlenn_CRUDV2
                 lblSelectedPO.Text = "Selected PO: " + poNumber + " | Status: " + selectedPOStatus;
                 if (selectedPOStatus == "Received")
                 {
-                    lblSelectedPO.ForeColor = Color.DarkGreen;
+                    lblSelectedPO.ForeColor = ExcelTrustTheme.SemanticSuccess;
                 }
                 else if (selectedPOStatus == "Draft")
                 {
-                    lblSelectedPO.ForeColor = Color.DarkBlue;
+                    lblSelectedPO.ForeColor = ExcelTrustTheme.ExcelGreen;
                 }
                 else
                 {
-                    lblSelectedPO.ForeColor = Color.DarkRed;
+                    lblSelectedPO.ForeColor = ExcelTrustTheme.SemanticDanger;
                 }
 
                 LoadPOLines(selectedPurchaseOrderId);
