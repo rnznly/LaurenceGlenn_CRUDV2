@@ -216,13 +216,25 @@ namespace LaurenceGlenn_CRUDV2
                         grpPOActions.Left = halfW + 25;
                         grpPOActions.Top = 15;
                         grpPOActions.Width = halfW;
-                        int actBtnW = (halfW - 36) / 3;
-                        btnReceivePO.Left = 10;
+                        grpPOActions.Height = 80;
+
+                        int actMargin = 15;
+                        int actSpacing = 12;
+                        int actBtnW = Math.Max(60, (halfW - actMargin * 2 - actSpacing * 2) / 3);
+                        btnReceivePO.Left = actMargin;
+                        btnReceivePO.Top = 30;
                         btnReceivePO.Width = actBtnW;
-                        btnTestReceiveTwice.Left = 10 + actBtnW + 8;
+                        btnReceivePO.Height = 38;
+
+                        btnTestReceiveTwice.Left = actMargin + actBtnW + actSpacing;
+                        btnTestReceiveTwice.Top = 30;
                         btnTestReceiveTwice.Width = actBtnW;
-                        btnTestDuplicateLine.Left = 10 + (actBtnW + 8) * 2;
+                        btnTestReceiveTwice.Height = 38;
+
+                        btnTestDuplicateLine.Left = actMargin + (actBtnW + actSpacing) * 2;
+                        btnTestDuplicateLine.Top = 30;
                         btnTestDuplicateLine.Width = actBtnW;
+                        btnTestDuplicateLine.Height = 38;
 
                         grpPOLineEntry.Left = halfW + 25;
                         grpPOLineEntry.Top = 105;

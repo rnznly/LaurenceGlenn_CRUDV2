@@ -378,8 +378,15 @@ namespace LaurenceGlenn_CRUDV2
                 btn.Text = "Challenge 2:\nDuplicate Line Rollback";
             }
 
-            // Clip button window to smooth pill capsule geometry
-            UpdatePillRegion(btn);
+            bool isSquare = ShouldUseSquareStyle(btn);
+            if (isSquare)
+            {
+                btn.Region = null;
+            }
+            else
+            {
+                UpdatePillRegion(btn);
+            }
 
             btn.Resize -= Btn_PillResize;
             btn.Resize += Btn_PillResize;
@@ -397,12 +404,30 @@ namespace LaurenceGlenn_CRUDV2
             btn.MouseUp += Btn_InvalidateMouse;
         }
 
+        public static bool ShouldUseSquareStyle(Button btn)
+        {
+            if (btn == null) return false;
+            string name = (btn.Name ?? "").ToLowerInvariant();
+            return name.Contains("receivepo") ||
+                   name.Contains("receivetwice") ||
+                   name.Contains("duplicateline") ||
+                   name.Contains("test") ||
+                   name.Contains("challenge");
+        }
+
         private static void Btn_PillResize(object sender, EventArgs e)
         {
             Button btn = sender as Button;
             if (btn != null)
             {
-                UpdatePillRegion(btn);
+                if (ShouldUseSquareStyle(btn))
+                {
+                    btn.Region = null;
+                }
+                else
+                {
+                    UpdatePillRegion(btn);
+                }
             }
         }
 
@@ -444,24 +469,46 @@ namespace LaurenceGlenn_CRUDV2
             Color curFg = !btn.Enabled ? Color.FromArgb(161, 159, 157) : fg;
             Color curBorder = !btn.Enabled ? Color.FromArgb(225, 223, 221) : border;
 
-            // Draw smooth capsule background & border
-            Rectangle rect = new Rectangle(0, 0, btn.Width - 1, btn.Height - 1);
-            using (GraphicsPath path = GetCapsulePath(rect, rect.Height / 2))
+            bool isSquare = ShouldUseSquareStyle(btn);
+
+            if (isSquare)
             {
+                // Clean crisp square / rectangular action tile (as requested for Receive & Challenge buttons)
+                Rectangle rect = new Rectangle(0, 0, btn.Width, btn.Height);
                 using (SolidBrush fillBrush = new SolidBrush(curBg))
                 {
-                    e.Graphics.FillPath(fillBrush, path);
+                    e.Graphics.FillRectangle(fillBrush, rect);
                 }
                 if (curBorder != Color.Transparent)
                 {
                     using (Pen borderPen = new Pen(curBorder, 1.2f))
                     {
-                        e.Graphics.DrawPath(borderPen, path);
+                        e.Graphics.DrawRectangle(borderPen, 0, 0, btn.Width - 1, btn.Height - 1);
+                    }
+                }
+            }
+            else
+            {
+                // Draw smooth capsule background & border
+                Rectangle rect = new Rectangle(0, 0, btn.Width - 1, btn.Height - 1);
+                using (GraphicsPath path = GetCapsulePath(rect, rect.Height / 2))
+                {
+                    using (SolidBrush fillBrush = new SolidBrush(curBg))
+                    {
+                        e.Graphics.FillPath(fillBrush, path);
+                    }
+                    if (curBorder != Color.Transparent)
+                    {
+                        using (Pen borderPen = new Pen(curBorder, 1.2f))
+                        {
+                            e.Graphics.DrawPath(borderPen, path);
+                        }
                     }
                 }
             }
 
             // Draw centered button text (supports multi-line)
+            Rectangle textRect = new Rectangle(0, 0, btn.Width, btn.Height);
             using (Font font = new Font(btn.Font.FontFamily, btn.Font.Size > 0 ? btn.Font.Size : 9F, btn.Font.Style))
             using (SolidBrush textBrush = new SolidBrush(curFg))
             using (StringFormat sf = new StringFormat
@@ -470,7 +517,7 @@ namespace LaurenceGlenn_CRUDV2
                 LineAlignment = StringAlignment.Center
             })
             {
-                e.Graphics.DrawString(btn.Text, font, textBrush, rect, sf);
+                e.Graphics.DrawString(btn.Text, font, textBrush, textRect, sf);
             }
         }
 
