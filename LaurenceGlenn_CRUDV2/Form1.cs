@@ -73,7 +73,8 @@ namespace LaurenceGlenn_CRUDV2
                     grpStockMovements, dgvStockMovements,
                     txtPONumber, btnGeneratePONumber, cmbPOSupplier, btnCreateDraftPO, btnRefreshPOs,
                     btnRefreshLowStock, btnFilterPOReport, cmbFilterPOStatus, btnRefreshMovements,
-                    lblPOTotalAmount
+                    lblPOTotalAmount, btnAddPOLine, cmbPOLineProduct, nudPOLineQty, nudPOLineCost,
+                    lblPOLineProduct, lblPOLineQty, lblPOLineCost, lblSelectedPO
                 };
 
                 foreach (Control c in fixedControls)
@@ -285,13 +286,57 @@ namespace LaurenceGlenn_CRUDV2
                         grpPOLineEntry.Top = listTop;
                         grpPOLineEntry.Width = halfW;
                         grpPOLineEntry.Height = bottomH;
-                        dgvPOLines.Left = 15;
-                        dgvPOLines.Top = 135;
-                        dgvPOLines.Width = halfW - 30;
-                        dgvPOLines.Height = Math.Max(100, bottomH - 175);
 
-                        lblPOTotalAmount.Top = dgvPOLines.Bottom + 8;
-                        lblPOTotalAmount.Left = Math.Max(15, grpPOLineEntry.Width - 15 - lblPOTotalAmount.Width);
+                        if (lblSelectedPO != null)
+                        {
+                            lblSelectedPO.Left = 15;
+                            lblSelectedPO.Top = 25;
+                        }
+
+                        // Labels row: Top = 50 with generous spacing
+                        if (lblPOLineProduct != null) { lblPOLineProduct.Left = 15; lblPOLineProduct.Top = 50; }
+                        if (lblPOLineQty != null)     { lblPOLineQty.Left = 240; lblPOLineQty.Top = 50; }
+                        if (lblPOLineCost != null)    { lblPOLineCost.Left = 340; lblPOLineCost.Top = 50; }
+
+                        // Inputs row: Top = 72, Height = 28, aligned with square Add Line Item button
+                        if (cmbPOLineProduct != null)
+                        {
+                            cmbPOLineProduct.Left = 15;
+                            cmbPOLineProduct.Top = 72;
+                            cmbPOLineProduct.Width = 210;
+                            cmbPOLineProduct.Height = 28;
+                        }
+                        if (nudPOLineQty != null)
+                        {
+                            nudPOLineQty.Left = 240;
+                            nudPOLineQty.Top = 72;
+                            nudPOLineQty.Width = 85;
+                            nudPOLineQty.Height = 28;
+                        }
+                        if (nudPOLineCost != null)
+                        {
+                            nudPOLineCost.Left = 340;
+                            nudPOLineCost.Top = 72;
+                            nudPOLineCost.Width = 110;
+                            nudPOLineCost.Height = 28;
+                        }
+                        if (btnAddPOLine != null)
+                        {
+                            btnAddPOLine.Left = 465;
+                            btnAddPOLine.Top = 72;
+                            btnAddPOLine.Width = 115;
+                            btnAddPOLine.Height = 28;
+                        }
+
+                        dgvPOLines.Left = 15;
+                        dgvPOLines.Top = 115;
+                        dgvPOLines.Width = halfW - 30;
+                        dgvPOLines.Height = Math.Max(100, bottomH - 165);
+
+                        // Move Total PO Amount to the left, perfectly aligned with Select Product dropdown (Left = 15)
+                        lblPOTotalAmount.Left = 15;
+                        lblPOTotalAmount.Top = dgvPOLines.Bottom + 10;
+                        lblPOTotalAmount.AutoSize = true;
                     }
 
                     // 5. Reports Tab Layout

@@ -856,7 +856,7 @@ namespace LaurenceGlenn_CRUDV2
             // 
             this.lblPOTotalAmount.AutoSize = true;
             this.lblPOTotalAmount.Font = new System.Drawing.Font("Segoe UI", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPOTotalAmount.Location = new System.Drawing.Point(340, 475);
+            this.lblPOTotalAmount.Location = new System.Drawing.Point(15, 475);
             this.lblPOTotalAmount.Name = "lblPOTotalAmount";
             this.lblPOTotalAmount.Size = new System.Drawing.Size(183, 20);
             this.lblPOTotalAmount.TabIndex = 9;
@@ -868,20 +868,20 @@ namespace LaurenceGlenn_CRUDV2
             this.dgvPOLines.AllowUserToDeleteRows = false;
             this.dgvPOLines.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dgvPOLines.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvPOLines.Location = new System.Drawing.Point(15, 110);
+            this.dgvPOLines.Location = new System.Drawing.Point(15, 118);
             this.dgvPOLines.MultiSelect = false;
             this.dgvPOLines.Name = "dgvPOLines";
             this.dgvPOLines.ReadOnly = true;
             this.dgvPOLines.RowHeadersVisible = false;
             this.dgvPOLines.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvPOLines.Size = new System.Drawing.Size(565, 355);
+            this.dgvPOLines.Size = new System.Drawing.Size(565, 345);
             this.dgvPOLines.TabIndex = 8;
             // 
             // btnAddPOLine
             // 
-            this.btnAddPOLine.Location = new System.Drawing.Point(475, 55);
+            this.btnAddPOLine.Location = new System.Drawing.Point(475, 75);
             this.btnAddPOLine.Name = "btnAddPOLine";
-            this.btnAddPOLine.Size = new System.Drawing.Size(105, 45);
+            this.btnAddPOLine.Size = new System.Drawing.Size(115, 28);
             this.btnAddPOLine.TabIndex = 7;
             this.btnAddPOLine.Text = "Add Line Item";
             this.btnAddPOLine.UseVisualStyleBackColor = true;

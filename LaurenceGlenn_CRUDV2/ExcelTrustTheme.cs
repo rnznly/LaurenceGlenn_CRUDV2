@@ -443,6 +443,8 @@ namespace LaurenceGlenn_CRUDV2
                    name.Contains("duplicateline") ||
                    name.Contains("createdraft") ||
                    name.Contains("generate") ||
+                   name.Contains("addpoline") ||
+                   name.Contains("addline") ||
                    name.Contains("test") ||
                    name.Contains("challenge");
         }
@@ -747,7 +749,22 @@ namespace LaurenceGlenn_CRUDV2
             if (dgv.Columns.Contains("SupplierCode")) dgv.Columns["SupplierCode"].HeaderText = "Code";
             if (dgv.Columns.Contains("ContactEmail")) dgv.Columns["ContactEmail"].HeaderText = "Email";
             if (dgv.Columns.Contains("SupplierStatus")) dgv.Columns["SupplierStatus"].HeaderText = "Status";
-            if (dgv.Columns.Contains("UnitCost")) dgv.Columns["UnitCost"].HeaderText = "Unit Cost (PHP)";
+            if (dgv.Columns.Contains("UnitCost"))
+            {
+                dgv.Columns["UnitCost"].HeaderText = "Unit Cost (PHP)";
+                dgv.Columns["UnitCost"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["UnitCost"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+            if (dgv.Columns.Contains("Subtotal"))
+            {
+                dgv.Columns["Subtotal"].HeaderText = "Subtotal (PHP)";
+                dgv.Columns["Subtotal"].DefaultCellStyle.Format = "N2";
+                dgv.Columns["Subtotal"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
+            }
+            if (dgv.Columns.Contains("Quantity"))
+            {
+                dgv.Columns["Quantity"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            }
             if (dgv.Columns.Contains("ReorderLevel")) dgv.Columns["ReorderLevel"].HeaderText = "Reorder Level";
             if (dgv.Columns.Contains("StockOnHand")) dgv.Columns["StockOnHand"].HeaderText = "Stock On Hand";
             if (dgv.Columns.Contains("PONumber")) dgv.Columns["PONumber"].HeaderText = "PO Number";
