@@ -273,6 +273,6 @@ Use these talking points during evaluation or defense:
 
 Distributed under the **MIT License**. See [`LICENSE`](LICENSE) for complete terms.
 
-* **Author / Student**: Laurence Glenn Bernado  
+* **Author / Student**: Reenznly and SinceYesterday DevWorks-R000 
 * **GitHub Profile**: [@rnznly](https://github.com/rnznly)  
 * **Project Repository**: [https://github.com/rnznly/LaurenceGlenn_CRUDV2](https://github.com/rnznly/LaurenceGlenn_CRUDV2)
